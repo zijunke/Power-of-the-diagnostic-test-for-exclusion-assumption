@@ -1,0 +1,33 @@
+library(xlsx)
+wd = 'D:/Research/2023/Necessity_of_multiple_predictors/RCode/Study2'
+setwd(wd)
+Cond.list = read.xlsx('CondList.xlsx',1)
+
+nCond = nrow(Cond.list)
+N.all = as.numeric(Cond.list$N)
+byx.all = as.numeric(Cond.list$byx)
+bxz.all = as.numeric(Cond.list$bx1zj)
+rzizj.all = as.numeric(Cond.list$rzizj)
+rx1y.all = as.numeric(Cond.list$rx1y)
+rx2y.all = as.numeric(Cond.list$rx2y)
+s2e.y.all = as.numeric(Cond.list$s2e.y)
+s2e.x1.all = as.numeric(Cond.list$s2e.x1)
+s2e.x2.all = as.numeric(Cond.list$s2e.x2)
+bxz2.all = as.numeric(Cond.list$bx2zj)
+
+for(Condi in 1:nCond){
+	newname = paste0('S2C',Condi,'.r')
+	tx <- readLines('Sim_Temp.r')
+	tx2 <- gsub('Nii',replace = N.all[Condi],x = tx)
+	tx3 <- gsub('BYXii',replace = byx.all[Condi],x = tx2)
+	tx4 <- gsub('BXZii',replace = bxz.all[Condi],x = tx3)
+	tx5 <- gsub('RX1Yii',replace = rx1y.all[Condi],x = tx4)
+	tx6 <- gsub('RX2Yii',replace = rx2y.all[Condi],x = tx5)
+	tx7 <- gsub('VEYii',replace = s2e.y.all[Condi],x = tx6)
+	tx8 <- gsub('VEX1ii',replace = s2e.x1.all[Condi],x = tx7)
+	tx9 <- gsub('VEX2ii',replace = s2e.x2.all[Condi],x = tx8)
+	tx10 <- gsub('RZIZJii',replace = rzizj.all[Condi],x = tx9)
+	tx11 <- gsub('BXZ2ii',replace = bxz2.all[Condi],x = tx10)
+	txf <- gsub('CONDii',replace = Condi,x = tx11)
+	writeLines(txf, con=newname)	
+}
